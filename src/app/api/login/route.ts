@@ -1,16 +1,16 @@
 import { db } from "@/lib/db";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { User } from "@/types/Users";
 
 const SECRET = process.env.JWT_SECRET || "defaultsecret";
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { username, password } = await req.json();
 
-    if (!email || !password) {
+    if (!username || !password) {
       return NextResponse.json(
         { message: "Email dan password wajib diisi" },
         { status: 400 }
@@ -18,8 +18,8 @@ export async function POST(req: Request) {
     }
 
     const [rows] = await db.query(
-        "SELECT id, email, name, password FROM users WHERE email = ? LIMIT 1",
-        [email]
+        "SELECT id, username, name, password FROM users WHERE username = ? LIMIT 1",
+        [username]
     );
     const users = rows as User[];
     const user = users[0];
