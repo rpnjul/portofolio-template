@@ -8,13 +8,11 @@ interface ProjectCardProps {
   description: string;
   img: string;
   stack: { icon: IconType; name: string }[];
-  link?: string;
 }
 
-const ProjectCard = ({ title, description, img, stack, link }: ProjectCardProps) => {
+const ProjectCard = ({ title, description, img, stack }: ProjectCardProps) => {
   return (
     <div className="group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl transform-gpu bg-background [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] transition-[filter,opacity] duration-500 ease">
-        {/* Background image */}
         <div>
             <Image
                 width={0}

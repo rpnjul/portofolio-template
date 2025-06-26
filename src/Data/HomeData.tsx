@@ -1,5 +1,5 @@
 import { experienceInterface, projectInterface } from "@/types/HomeData";
-import { DiMysql, DiPostgresql } from "react-icons/di";
+import { DiPostgresql } from "react-icons/di";
 import { FaLaravel } from "react-icons/fa";
 import { SiNextdotjs, SiNodedotjs } from "react-icons/si";
 

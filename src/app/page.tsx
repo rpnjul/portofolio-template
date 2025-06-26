@@ -2,7 +2,7 @@ import ProjectCard from "@/components/ProjectCard";
 import { experienceData, projectData } from "@/Data/HomeData";
 import Link from "next/link";
 import { AiOutlineMail } from "react-icons/ai";
-import { FaBootstrap, FaCss3Alt, FaGithub, FaHtml5, FaInstagram, FaLaravel, FaNodeJs, FaReact } from "react-icons/fa";
+import { FaBootstrap, FaGithub, FaInstagram, FaLaravel, FaNodeJs, FaReact } from "react-icons/fa";
 import { GrLocationPin, GrMysql } from "react-icons/gr";
 import { RiNextjsFill, RiTailwindCssFill } from "react-icons/ri";
 import { SiJavascript, SiPostgresql, SiTypescript } from "react-icons/si";
@@ -146,12 +146,11 @@ const Home = () => {
                 <h1>Projects</h1>
                 <div className="flex flex-col gap-4">
                     {projectData.map((v, i) => (
-                        <Link href="#" style={{ margin: "unset" }} key={i}>
+                        <Link href={"/projects/" + v.slug} style={{ margin: "unset" }} key={i}>
                             <ProjectCard
                                 title={v.title}
                                 description={v.description}
                                 img={v.img}
-                                link={"/projects/" + v.slug}
                                 stack={v.stack}
                             />
                         </Link>
