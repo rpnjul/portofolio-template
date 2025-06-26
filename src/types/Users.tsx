@@ -5,5 +5,4 @@ export interface User extends RowDataPacket {
     email: string
     name: string
     password: string
-  }
-  
+}
