@@ -7,19 +7,19 @@ const Header = () => {
                 <a href="#" className="logo">Satria Aprilian</a>
                 <ul className="main-menu">
                     <li>
-                        <Link href="#" className="active">About</Link>
+                        <Link href="/about" className="active">About</Link>
                     </li>
                     <li>
-                        <Link href="#">Posts</Link>
+                        <Link href="/posts">Posts</Link>
                     </li>
                     <li>
-                        <Link href="#">Works</Link>
+                        <Link href="/works">Works</Link>
                     </li>
                     <li>
-                        <Link href="#">Projects</Link>
+                        <Link href="/projects">Projects</Link>
                     </li>
                     <li>
-                        <Link href="#">Contact Me</Link>
+                        <Link href="/contact">Contact Me</Link>
                     </li>
                 </ul>
                 <ul className="main-menu">
