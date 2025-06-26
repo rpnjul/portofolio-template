@@ -23,7 +23,7 @@ const Header = () => {
                     </li>
                 </ul>
                 <ul className="main-menu">
-                    <Link href="/">English</Link>
+                    <Link href="/" className="active">English</Link>
                 </ul>
             </nav>
         </header>
