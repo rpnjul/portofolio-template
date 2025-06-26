@@ -1,103 +1,168 @@
-import Image from "next/image";
+import ProjectCard from "@/components/ProjectCard";
+import { experienceData, projectData } from "@/Data/HomeData";
+import Link from "next/link";
+import { AiOutlineMail } from "react-icons/ai";
+import { FaBootstrap, FaCss3Alt, FaGithub, FaHtml5, FaInstagram, FaLaravel, FaNodeJs, FaReact } from "react-icons/fa";
+import { GrLocationPin, GrMysql } from "react-icons/gr";
+import { RiNextjsFill, RiTailwindCssFill } from "react-icons/ri";
+import { SiJavascript, SiPostgresql, SiTypescript } from "react-icons/si";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+const Home = () => {
+    return (
+        <>
+            <div className="card">
+                <div className="flex flex-col gap-1">
+                    <div className="flex flex-row w-full justify-between gap-2">
+                        <h1 className="unset text-4xl" style={{margin: 0}}>Satria Aprilian</h1>
+                        <div className="flex gap-2 justify-end" style={{margin: 0}}>
+                            <Link href="mailto:satriaaprilian18@gmail.com" target="_blank" aria-label="Email">
+                                <div className="card" style={{ padding: 10, lineHeight: 0, margin: 0 }}>
+                                    <div className="w-[20px] h-[20px]">
+                                        <AiOutlineMail />
+                                    </div>
+                                </div>
+                            </Link>
+                            <Link href="https://github.com/rpnjul" target="_blank" aria-label="Github">
+                                <div className="card" style={{ padding: 10, lineHeight: 0, margin: 0 }}>
+                                    <div className="w-[20px] h-[20px]">
+                                        <FaGithub />
+                                    </div>
+                                </div>
+                            </Link>
+                            <Link href="https://instagram.com/sssssatria" target="_blank" aria-label="Instagram">
+                                <div className="card" style={{ padding: 10, lineHeight: 0, margin: 0 }}>
+                                    <div className="w-[20px] h-[20px]">
+                                        <FaInstagram />
+                                    </div>
+                                </div>
+                            </Link>
+                        </div>
+                    </div>
+                    <div
+                        className="flex justify-start items-center text-gray-400"
+                        style={{ margin: 0 }}
+                    >
+                        <div className="h-[20px] w-[20px] custom">
+                            <GrLocationPin />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+                        </div>
+                        <span className="w-fit" style={{ margin: 0 }}>
+                            Jakarta, Indonesia
+                        </span>
+                    </div>
+
+                </div>
+                <div className="mb-0 mt-4">
+                 Full-Stack Developer with 5+ years of experience in building fast, responsive, and impactful web applications. I turn ideas into real, scalable products.
+                </div>
+
+            </div>
+            <div className="mt-16">
+                <h1 className="home-title">What i work with</h1>
+                <div className="group flex overflow-hidden p-2 [--duration:30s] [--gap:1rem] [gap:var(--gap)] flex-row relative">
+                    {Array(3).fill(0).map((_, i) => (
+                        <div
+                            key={i}
+                            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]"
+                            style={{ maxWidth: 'none' }}
+                        >
+                            <div className="flex gap-[1rem]" style={{ maxWidth: 'none' }}>
+                                <div className="h-8 icn"><FaBootstrap /></div> Bootstrap
+                                <div className="h-8 icn"><RiTailwindCssFill /></div> Tailwind
+                                <div className="h-8 icn" ><SiJavascript /></div> JavaScript
+                                <div className="h-8 icn" ><SiTypescript /></div> TypeScript
+                                <div className="h-8 icn" ><FaReact /></div> React
+                                <div className="h-8 icn" ><RiNextjsFill /></div> Nextjs
+                            </div>
+                        </div>
+                    ))}
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-background" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-background" />
+                </div>
+                <div className="group flex overflow-hidden p-2 [--duration:30s] [--gap:1rem] [gap:var(--gap)] flex-row relative">
+                    {Array(3).fill(0).map((_, i) => (
+                        <div
+                            key={i}
+                            className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]"
+                            style={{ maxWidth: 'none' }}
+                        >
+                            <div className="flex gap-[1rem]" style={{ maxWidth: 'none' }}>
+                                <div className="h-8 icn"><FaLaravel /></div> Laravel
+                                <div className="h-8 icn"><FaNodeJs /></div> Node.js
+                                <div className="h-8 icn" ><GrMysql /></div> MySQL
+                                <div className="h-8 icn" ><SiPostgresql /></div> Postgre
+                                <div className="h-8 icn" ><FaReact /></div> React
+                                <div className="h-8 icn" ><RiNextjsFill /></div> Nextjs
+                            </div>
+                        </div>
+                    ))}
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-background" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-background" />
+                </div>
+                <h1 className="home-title">Experience</h1>
+                <section className="relative flex flex-col justify-center overflow-hidden">
+                    <div className="w-full max-w-6xl mx-auto">
+                        <div className="flex flex-col justify-center divide-y divide-slate-200 [&>*]:pb-4">
+                            <div className="w-full max-w-3xl mx-auto">
+                                <div className="-my-6 flex flex-col items-center">
+                                    {experienceData.map((v, _) => (
+                                        <div className="relative pl-8 py-6 group" style={{ marginLeft: 0 }} key={_}>
+                                            <div className="font-medium text-indigo-500 mb-1 sm:mb-0">
+                                                <a
+                                                    href={`${v.link}`}
+                                                    target="_blank"
+                                                    rel="noopener"
+                                                    className="relative inline-block group/linkihate"
+                                                >
+                                                    <span className="relative z-10">
+                                                        {v.company}
+                                                        <span className="absolute bottom-[0px] left-0 w-full h-0.5 bg-accent origin-left transform scale-x-0 transition-transform duration-300 ease-out group-hover/linkihate:scale-x-100" />
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div className="flex flex-col items-start mb-1 group-last:before:hidden before:absolute before:left-2 sm:before:left-0 before:h-full before:px-px before:bg-slate-300 sm:before:ml-[0.5rem] before:self-start before:-translate-x-1/2 before:translate-y-3 after:absolute after:left-2 sm:after:left-0 after:w-2 after:h-2 after:bg-accent after:border-4 after:box-content after:border-slate-50 after:rounded-full sm:after:ml-[0.5rem] after:-translate-x-1/2 after:translate-y-1.5">
+                                                <div
+                                                    className="text-xl font-bold text-slate-100"
+                                                    style={{ margin: 0 }}
+                                                >
+                                                    {v.job}
+                                                </div>
+                                                <div className="text-sm text-slate-400" style={{ margin: 0 }}>
+                                                    {v.date}
+                                                </div>
+                                            </div>
+                                            <div className="text-slate-300 timeline-content">
+                                                {v.description}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div className="mt-8">
+                <h1>Projects</h1>
+                <div className="flex flex-col gap-4">
+                    {projectData.map((v, i) => (
+                        <Link href="#" style={{ margin: "unset" }} key={i}>
+                            <ProjectCard
+                                title={v.title}
+                                description={v.description}
+                                img={v.img}
+                                link={"/projects/" + v.slug}
+                                stack={v.stack}
+                            />
+                        </Link>
+                    ))}
+                </div>
+            </div>
+            <div className="mt-8">
+                <h1>Latest blog posts</h1>
+            </div>
+        </>
+    )
 }
+
+export default Home;

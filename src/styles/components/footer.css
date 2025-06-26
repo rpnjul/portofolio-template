@@ -1,0 +1,17 @@
+footer {
+    max-width: 60rem;
+    padding-top: 1rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    border-top: 1px solid #313131;
+    margin-top: 5rem;
+}
+
+footer .inline-icon svg{
+    fill:#fff;
+    height:20px;
+    top:5px;
+    position:relative
+}
