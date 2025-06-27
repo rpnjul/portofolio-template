@@ -46,7 +46,7 @@ const ExpComponent = ({ limit }: ExpPropsInt) => {
 
     return (
         <>
-            <h1 className="home-title">Experience</h1>
+            <h1 className="home-title">Career</h1>
             {isLoading ? (
                 <ExpSkeleton />
             ) : (

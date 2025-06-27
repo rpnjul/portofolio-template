@@ -6,12 +6,14 @@ import "../styles/components/header.css";
 import "../styles/components/footer.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { Slide, ToastContainer } from "react-toastify";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 
 export const metadata: Metadata = {
   title: {
-    default: "Satria Aprilian Profile",
-    template: "%s | Satria Aprilian Profile",
+    default: "Satria Aprilian",
+    template: "%s | Satria Aprilian",
   },
   description: "Full-Stack Web Developer - Satria Aprilian",
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
@@ -82,9 +84,12 @@ export default function RootLayout({
       <body>
         <Header />
         <main className="content">
-          {children}
+          <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            {children}
+          </SkeletonTheme>
         </main>
         <Footer />
+        <ToastContainer theme="dark" transition={Slide} />
       </body>
     </html>
   );

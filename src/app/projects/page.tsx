@@ -1,5 +1,13 @@
+import ProjectComponent from "@/components/common/ProjectComponent";
+
 const Project = () => {
-  return <h1>Project Pages</h1>;
+  return (
+    <>
+      <div className="mt-8">
+        <ProjectComponent customTitle="Featured Projects" />
+      </div>
+    </>
+  );
 };
 
 export default Project;

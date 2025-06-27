@@ -26,7 +26,7 @@ const ProjectCard = ({ title, description, icon, cover, stack }: ProjectCardProp
           <Image
             alt="Icon"
             src={icon ? icon : "/"}
-            className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75 custom"
+            className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75 object-contain custom"
             width={100}
             height={100}
           />

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 
 const Header = () => {
     const pathname = usePathname();
-    console.log('pathname',pathname);
     const navLinks = [
       { href: "/about", label: "About Me" },
       { href: "/projects", label: "Projects" },

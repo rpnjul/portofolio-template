@@ -106,10 +106,10 @@ const Home = async () => {
           <ExpComponent limit={2} />
         </div>
         <div className="mt-8">
-          <ProjectComponent />
+          <ProjectComponent limit={2} />
         </div>
         <div className="mt-8">
-          <PostComponent />
+          <PostComponent limit={2}/>
         </div>
       </>
     );
