@@ -1,24 +1,23 @@
-// components/ProjectCard.tsx
 import { iconMap, labelMap } from "@/constants/skills";
 import Image from "next/image";
-import { IconType } from "react-icons";
 import { MdArrowRightAlt } from "react-icons/md";
 
 interface ProjectCardProps {
-  title: string;
-  description: string;
-  img: string;
-  stack: string[];
+    title: string;
+    description: string;
+    icon: string;
+    cover: string;
+    stack: string[];
 }
 
-const ProjectCard = ({ title, description, img, stack }: ProjectCardProps) => {
+const ProjectCard = ({ title, description, icon, cover, stack }: ProjectCardProps) => {
     return (
       <div className="group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl transform-gpu bg-background [border:1px_solid_rgba(255,255,255,.1)] [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] transition-[filter,opacity] duration-500 ease">
         <div>
           <Image
-            width={0}
-            height={0}
-            src={img ? img : "/"}
+            width={800}
+            height={500}
+            src={cover ? cover : "/"}
             alt={title}
             className="absolute left-0 top-0 h-full w-full border-none transition-all duration-300 ease-out opacity-70 [mask-image:linear-gradient(to_top,transparent_20%,#000_100%)] group-hover:scale-105 object-cover"
           />
@@ -26,10 +25,10 @@ const ProjectCard = ({ title, description, img, stack }: ProjectCardProps) => {
         <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10 custom">
           <Image
             alt="Icon"
-            src={img ? img : "/favicon.ico"}
+            src={icon ? icon : "/"}
             className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75 custom"
-            width={0}
-            height={0}
+            width={100}
+            height={100}
           />
           <h2 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300 m-0 custom">
             {title}

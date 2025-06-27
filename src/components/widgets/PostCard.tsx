@@ -1,7 +1,5 @@
 // components/ProjectCard.tsx
-import { iconMap, labelMap } from "@/constants/skills";
 import Image from "next/image";
-import { IconType } from "react-icons";
 import { MdArrowRightAlt } from "react-icons/md";
 
 interface PostCardProps {

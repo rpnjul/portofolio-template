@@ -22,7 +22,7 @@ const Header = () => {
             {navLinks.map((v, i) => (
                 <li key={i}>
                     <Link href={v.href} className={pathname == v.href ? "active" : ""}>
-                        About Me
+                        {v.label}
                     </Link>
                 </li>
             ))}
