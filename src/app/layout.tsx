@@ -58,6 +58,10 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="apple-touch-icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/apple-touch-icon.png" sizes="32x32" />
+        <link
+          rel="canonical"
+          href={process.env.NEXT_PUBLIC_WEB_URL || "https://www.satria.me"}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

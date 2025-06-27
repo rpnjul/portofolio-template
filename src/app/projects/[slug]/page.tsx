@@ -85,12 +85,13 @@ const ProjectDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
         </div>
         <div className="mt-8">
             {data.content ? (
-                <p
+                <div
                   className="my-8"
+                  id="content"
                   dangerouslySetInnerHTML={{
                     __html: data.content,
                   }}
-                ></p>
+                ></div>
             ) : (
                 <p className="my-8">No Content</p>
             )}

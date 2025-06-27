@@ -108,3 +108,8 @@ h1.home-title {
     font-weight: bolder;
     margin: 28px 0;
 }
+
+#content p {
+    margin-block: calc(var(--spacing) * 8);
+    text-align: justify;
+}
