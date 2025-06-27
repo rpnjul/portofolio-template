@@ -1,16 +1,16 @@
 import { db } from "@/lib/db";
-import { Experience } from "@/types/Experience";
+import { PostsData } from "@/types/Posts";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
     const [rows] = await db.query(
-        "SELECT * FROM experiences ORDER BY exp_id DESC"
+        "SELECT * FROM posts ORDER BY post_id DESC"
     );
 
-    const exp = rows as Experience[];
+    const data = rows as PostsData[];
     
     return NextResponse.json(
-      { message: "Success", data: exp },
+      { message: "Success", data: data },
       { status: 200 }
     );
 }

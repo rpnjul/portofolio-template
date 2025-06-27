@@ -1,6 +1,8 @@
+import PostCard from "@/components/common/PostCard";
 import ProjectCard from "@/components/common/ProjectCard";
 import SkillsCard from "@/components/common/SkillsCard";
 import { Experience } from "@/types/Experience";
+import { PostsData } from "@/types/Posts";
 import { Projects } from "@/types/Projects";
 import Link from "next/link";
 import { AiOutlineMail } from "react-icons/ai";
@@ -9,23 +11,10 @@ import { GrLocationPin } from "react-icons/gr";
 
 
 const getExperience = async (): Promise<Experience[]> => {
-    console.log(
-      "fetching from:",
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/experience`
-    );
-      
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/experience`,
-        {
-        cache: "no-store",
-        }
-        );
-
-
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/experience`, { cache: "no-store" });
     if (!res.ok) {
         throw new Error("Failed to fetch experience data");
     }
-
     const data = await res.json();
     return data.data;
 };
@@ -39,10 +28,19 @@ const getProjects = async (): Promise<Projects[]> => {
     return data.data;
 }
 
+const getPosts = async(): Promise<PostsData[]> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, { cache: "no-store" });
+  if (!res.ok) {
+      throw new Error("Failed to fetch posts data");
+  }
+  const data = await res.json();
+  return data.data;
+}
+
 const Home = async () => {
     const expData = await getExperience();
     const projectData = await getProjects();
-    console.log('projectData', projectData);
+    const postData = await getPosts();
     return (
       <>
         <div className="card">
@@ -139,6 +137,7 @@ const Home = async () => {
             ]}
           />
           <h1 className="home-title">Experience</h1>
+          {expData.length > 0 ? (
           <section className="relative flex flex-col justify-center overflow-hidden">
             <div className="w-full max-w-6xl mx-auto">
               <div className="flex flex-col justify-center divide-y divide-slate-200 [&>*]:pb-4">
@@ -187,28 +186,55 @@ const Home = async () => {
               </div>
             </div>
           </section>
+          ) : (
+            <h1>NO DATA FOUND</h1>
+          )}
         </div>
         <div className="mt-8">
           <h1>Projects</h1>
-          <div className="flex flex-col gap-4">
-            {projectData.map((v, i) => (
-              <Link
-                href={"/projects/" + v.slug}
-                style={{ margin: "unset" }}
-                key={i}
-              >
-                <ProjectCard
-                  title={v.title}
-                  description={v.description}
-                  img={v.img}
-                  stack={v.tech_map}
-                />
-              </Link>
-            ))}
-          </div>
+          {projectData.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {projectData.map((v, i) => (
+                  <Link
+                    href={"/projects/" + v.slug}
+                    style={{ margin: "unset" }}
+                    key={i}
+                  >
+                    <ProjectCard
+                      title={v.title}
+                      description={v.description}
+                      img={v.img}
+                      stack={v.tech_map}
+                    />
+                  </Link>
+                ))}
+              </div>
+
+          ) : (
+            <h1>NO DATA FOUND</h1>
+          )}
         </div>
         <div className="mt-8">
           <h1>Latest blog posts</h1>
+          {postData.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {postData.map((v, i) => (
+                  <Link
+                    href={"/posts/"+v.slug}
+                    style={{margin: "unset"}}
+                    key={i}
+                  >
+                    <PostCard
+                        title={v.title}
+                        description={v.description}
+                        img={v.cover}
+                    />
+                  </Link>
+                ))}
+              </div>
+          ) : (
+            <h1>No posts available</h1>
+          )}
         </div>
       </>
     );
