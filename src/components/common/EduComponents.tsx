@@ -1,4 +1,4 @@
-"use client"; // kalau kamu pakai Next.js app router
+"use client";
 import ExpCard from "../widgets/ExpCard";
 
 const EduComponent = () => {
@@ -13,15 +13,15 @@ const EduComponent = () => {
                 <ExpCard
                   company={"Bina Nusantara University"}
                   link={"https://binus.ac.id/"}
-                  job={"Bachelor Degree in Information Systems"}
-                  date={"2020 - 2024"}
+                  job={"Bachelor’s Degree in Information Systems"}
+                  date={"2021 - 2025"}
                   desc={""}
                 />
                 <ExpCard
                   company={"Bina Sarana Informatika University"}
                   link={"https://bsi.ac.id/"}
                   job={"Diploma Degree in Information Systems"}
-                  date={"2020 - 2024"}
+                  date={"2017 - 2020"}
                   desc={""}
                 />
               </div>
