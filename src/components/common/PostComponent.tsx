@@ -19,46 +19,47 @@ const getPosts = async (limit?: number): Promise<PostsData[]> => {
 }
 interface PropPostInt {
   limit?: number;
+  customTitle?: string;
 }
 
-const PostComponent = ({limit}: PropPostInt) => {
+const PostComponent = ({ limit, customTitle }: PropPostInt) => {
   const [postData, setPostData] = useState<PostsData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const data = await getPosts(limit);
-          setPostData(data);
-        } catch (error) {
-          console.error(error)
-        } finally {
-          setIsLoading(false);
-        }
+    const fetchData = async () => {
+      try {
+        const data = await getPosts(limit);
+        setPostData(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
       }
-      fetchData();
+    };
+    fetchData();
   }, [limit]);
 
   return (
     <>
-      <h1>Latest blog posts</h1>
+      <h1>{customTitle ? customTitle : "Latest blog posts"}</h1>
       {isLoading ? (
         <PostSkeleton />
       ) : (
-          <div className="flex flex-col gap-4">
-            {postData.map((v, i) => (
-              <Link href={"/posts/" + v.slug} style={{ margin: "unset" }} key={i}>
-                <PostCard
-                  title={v.title}
-                  description={v.description}
-                  img={v.cover}
-                />
-              </Link>
-            ))}
-          </div>
+        <div className="flex flex-col gap-4">
+          {postData.map((v, i) => (
+            <Link href={"/posts/" + v.slug} style={{ margin: "unset" }} key={i}>
+              <PostCard
+                title={v.title}
+                description={v.description}
+                img={v.cover}
+              />
+            </Link>
+          ))}
+        </div>
       )}
     </>
   );
-}
+};
 
 export default PostComponent;

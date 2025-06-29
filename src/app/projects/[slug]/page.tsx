@@ -4,6 +4,7 @@ import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailSkeleton";
 import { iconMap, labelMap } from "@/constants/skills";
 import { Projects } from "@/types/Projects";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 import { use, useEffect, useState } from "react";
 
 const getProjects = async (slug?: string): Promise<Projects> => {
@@ -35,7 +36,7 @@ const ProjectDetail = ({ params }: { params: Promise<{ slug: string }> }) => {
         fetchData()
     }, [slug])
     if (isLoading) return <ProjectDetailSkeleton />;
-    if (!data) return null;
+    if (!data) return notFound();
     return (
       <>
         <figure className="full-width">

@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 const Header = () => {
     const pathname = usePathname();
     const navLinks = [
-      { href: "/about", label: "About Me" },
+      { href: "/about", label: "About" },
       { href: "/projects", label: "Projects" },
       { href: "/posts", label: "Posts" },
-      { href: "/contact", label: "Contact Me" },
+      { href: "/contact", label: "Contact" },
     ];
     return (
       <header className="site-header">
@@ -26,9 +26,9 @@ const Header = () => {
                 </li>
             ))}
           </ul>
-          <ul className="main-menu">
-            <Link href="/" className="active">
-              English
+          <ul className="main-menu" style={{display: "none"}}>
+            <Link href="/cv.pdf" className="active">
+              Download CV
             </Link>
           </ul>
         </nav>

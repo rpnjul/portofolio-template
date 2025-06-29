@@ -7,7 +7,7 @@ export async function GET(req: Request) {
   const slug = pathname.split("/").pop();
 
   if (!slug) {
-    return NextResponse.json({ message: "Slug not found" }, { status: 400 });
+    return NextResponse.json({ message: "Slug not found",status:false }, { status: 400 });
   }
   try{
     const [rows] = await db.query(
@@ -35,7 +35,7 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error("GET project_id error:", error);
     return NextResponse.json(
-      { message: "Internal Server Error",messages: error },
+      { message: "Internal Server Error", messages: error, status: false },
       { status: 500 }
     );
   }

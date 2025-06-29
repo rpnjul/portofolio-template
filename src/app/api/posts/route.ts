@@ -11,8 +11,11 @@ export async function GET(req: Request) {
       limit ? [limit] : []
     );
 
-    const data = rows as PostsData[];
-    
+    const rawData = rows as PostsData[];
+    const data = rawData.map((dt) => ({
+      ...dt,
+      cover: process.env.NEXT_PUBLIC_BASE_URL + dt.cover,
+    }));
     return NextResponse.json(
       { message: "Success", data: data },
       { status: 200 }
