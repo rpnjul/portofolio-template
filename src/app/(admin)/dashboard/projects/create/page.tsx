@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import TiptapEditor from "@/components/common/TiptapEditor";
 
 const CreateProject = () => {
   const router = useRouter();
@@ -64,7 +65,10 @@ const CreateProject = () => {
   return (
     <>
       <div className="card">
-        <div className="flex justify-between items-center" style={{ margin: 0 }}>
+        <div
+          className="flex justify-between items-center"
+          style={{ margin: 0 }}
+        >
           <h1 className="unset text-3xl" style={{ margin: 0 }}>
             Create New Project
           </h1>
@@ -82,7 +86,10 @@ const CreateProject = () => {
         <div className="card">
           <div className="space-y-4">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium mb-2 text-gray-400">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium mb-2 text-gray-400"
+              >
                 Title <span className="text-gray-500">*</span>
               </label>
               <input
@@ -99,7 +106,10 @@ const CreateProject = () => {
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium mb-2 text-gray-400">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium mb-2 text-gray-400"
+              >
                 Description <span className="text-gray-500">*</span>
               </label>
               <textarea
@@ -116,8 +126,11 @@ const CreateProject = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="cover" className="block text-sm font-medium mb-2 text-gray-400">
+              <div className="w-full">
+                <label
+                  htmlFor="cover"
+                  className="block text-sm font-medium mb-2 text-gray-400"
+                >
                   Cover Image URL
                 </label>
                 <input
@@ -132,8 +145,11 @@ const CreateProject = () => {
                 />
               </div>
 
-              <div>
-                <label htmlFor="icon" className="block text-sm font-medium mb-2 text-gray-400">
+              <div className="w-full">
+                <label
+                  htmlFor="icon"
+                  className="block text-sm font-medium mb-2 text-gray-400"
+                >
                   Icon URL
                 </label>
                 <input
@@ -150,7 +166,10 @@ const CreateProject = () => {
             </div>
 
             <div>
-              <label htmlFor="link" className="block text-sm font-medium mb-2 text-gray-400">
+              <label
+                htmlFor="link"
+                className="block text-sm font-medium mb-2 text-gray-400"
+              >
                 Project Link
               </label>
               <input
@@ -166,7 +185,10 @@ const CreateProject = () => {
             </div>
 
             <div>
-              <label htmlFor="tech" className="block text-sm font-medium mb-2 text-gray-400">
+              <label
+                htmlFor="tech"
+                className="block text-sm font-medium mb-2 text-gray-400"
+              >
                 Technologies (comma-separated)
               </label>
               <input
@@ -179,25 +201,30 @@ const CreateProject = () => {
                 style={{ margin: 0 }}
                 placeholder="React,TypeScript,Node.js,MongoDB"
               />
-              <p className="text-xs text-gray-500 mt-1" style={{ margin: "4px 0 0 0" }}>
-                Separate technologies with commas (e.g., React,TypeScript,Node.js)
+              <p
+                className="text-xs text-gray-500 mt-1"
+                style={{ margin: "4px 0 0 0" }}
+              >
+                Separate technologies with commas (e.g.,
+                React,TypeScript,Node.js)
               </p>
             </div>
 
             <div>
-              <label htmlFor="content" className="block text-sm font-medium mb-2 text-gray-400">
+              <label
+                htmlFor="content"
+                className="block text-sm font-medium mb-2 text-gray-400"
+              >
                 Content <span className="text-gray-500">*</span>
               </label>
-              <textarea
-                id="content"
-                name="content"
-                required
-                value={formData.content}
-                onChange={handleChange}
-                rows={15}
-                className="w-full px-4 py-2 card border-0 focus:outline-none focus:ring-1 focus:ring-gray-600 font-mono text-sm"
-                style={{ margin: 0 }}
-                placeholder="Enter project content (supports HTML)"
+              <TiptapEditor
+                content={formData.content}
+                onChange={(content) => {
+                  setFormData({
+                    ...formData,
+                    content: content,
+                  });
+                }}
               />
             </div>
           </div>

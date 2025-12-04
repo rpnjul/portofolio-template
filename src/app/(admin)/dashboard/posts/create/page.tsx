@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import TiptapEditor from "@/components/common/TiptapEditor";
 
 const CreatePost = () => {
   const router = useRouter();
@@ -132,16 +133,14 @@ const CreatePost = () => {
               <label htmlFor="content" className="block text-sm font-medium mb-2 text-gray-400">
                 Content <span className="text-gray-500">*</span>
               </label>
-              <textarea
-                id="content"
-                name="content"
-                required
-                value={formData.content}
-                onChange={handleChange}
-                rows={15}
-                className="w-full px-4 py-2 card border-0 focus:outline-none focus:ring-1 focus:ring-gray-600 font-mono text-sm"
-                style={{ margin: 0 }}
-                placeholder="Enter post content (supports HTML)"
+              <TiptapEditor
+                content={formData.content}
+                onChange={(content) => {
+                  setFormData({
+                    ...formData,
+                    content: content,
+                  });
+                }}
               />
             </div>
           </div>

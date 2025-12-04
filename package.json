@@ -9,6 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tiptap/extension-color": "^3.12.1",
+    "@tiptap/extension-image": "^3.12.1",
+    "@tiptap/extension-link": "^3.12.1",
+    "@tiptap/extension-text-align": "^3.12.1",
+    "@tiptap/extension-text-style": "^3.12.1",
+    "@tiptap/react": "^3.12.1",
+    "@tiptap/starter-kit": "^3.12.1",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^7.0.0",
