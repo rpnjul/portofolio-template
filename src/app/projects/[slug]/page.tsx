@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import ProjectDetailSkeleton from "@/components/skeleton/ProjectDetailSkeleton";
 import { iconMap, labelMap } from "@/constants/skills";
 import { Projects } from "@/types/Projects";
 import Image from "next/image";
@@ -57,14 +56,14 @@ export async function generateMetadata({
       url: `${baseUrl}/projects/${slug}`,
       title: project.title,
       description: project.description,
-      images: [
+      images: project.cover ? [
         {
           url: project.cover,
           width: 1200,
           height: 630,
           alt: project.title,
         },
-      ],
+      ] : [],
       publishedTime: new Date(project.created_at).toISOString(),
       modifiedTime: new Date(project.updated_at).toISOString(),
       authors: ["Satria Aprilian"],
@@ -75,7 +74,7 @@ export async function generateMetadata({
       creator: "@sssssatria",
       title: project.title,
       description: project.description,
-      images: [project.cover],
+      images: project.cover ? [project.cover] : [],
     },
     alternates: {
       canonical: `${baseUrl}/projects/${slug}`,
@@ -101,8 +100,8 @@ const ProjectDetail = async ({
     "@type": "CreativeWork",
     name: data.title,
     description: data.description,
-    image: data.cover,
-    url: data.link,
+    ...(data.cover && { image: data.cover }),
+    ...(data.link && { url: data.link }),
     datePublished: new Date(data.created_at).toISOString(),
     dateModified: new Date(data.updated_at).toISOString(),
     author: {
@@ -126,28 +125,32 @@ const ProjectDetail = async ({
           __html: JSON.stringify(projectStructuredData),
         }}
       />
-      <figure className="full-width">
-        <picture>
-          <Image
-            src={data.cover}
-            alt={data.title}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto rounded-[10px]"
-            priority
-          />
-        </picture>
-      </figure>
+      {data.cover && (
+        <figure className="full-width">
+          <picture>
+            <Image
+              src={data.cover}
+              alt={data.title}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-auto rounded-[10px]"
+              priority
+            />
+          </picture>
+        </figure>
+      )}
       <div className="card">
         <div className="flex gap-4 items-center">
-          <Image
-            alt={`${data.title} icon`}
-            width={50}
-            height={50}
-            src={data!.icon}
-            className="h-12 w-12 object-contain"
-          />
+          {data.icon && (
+            <Image
+              alt={`${data.title} icon`}
+              width={50}
+              height={50}
+              src={data.icon}
+              className="h-12 w-12 object-contain"
+            />
+          )}
           <div className="flex flex-row w-full justify-between gap-2">
             <h1 className="my-0" style={{ marginLeft: 0 }}>
               {data.title}
@@ -172,7 +175,7 @@ const ProjectDetail = async ({
           </div>
         </div>
         <div className="flex gap-2 mt-4 custom flex-wrap">
-          {data.tech_map.map((v: string, i: number) => {
+          {data.tech_map?.map((v: string, i: number) => {
             const lower = v.toLowerCase();
             const icon = iconMap[lower];
             const label = labelMap[lower] || lower;

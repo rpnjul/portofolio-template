@@ -25,6 +25,7 @@ const EditPost = () => {
       return;
     }
     fetchPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   const fetchPost = async () => {
@@ -32,7 +33,7 @@ const EditPost = () => {
       const response = await fetch("/api/posts");
       const data = await response.json();
       if (data.status !== false) {
-        const post = data.data.find((p: any) => p._id === postId);
+        const post = data.data.find((p: { _id: string | string[] | undefined }) => p._id === postId);
         if (post) {
           setFormData({
             title: post.title || "",

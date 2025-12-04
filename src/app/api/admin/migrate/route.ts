@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const { action } = body; // 'migrate' or 'seed' or 'both'
 
     const db = await getDatabase();
-    const results: any = {};
+    const results: Record<string, string> = {};
 
     if (action === "migrate" || action === "both") {
       console.log("Running migrations manually...");

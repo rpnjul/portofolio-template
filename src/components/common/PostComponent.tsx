@@ -52,7 +52,7 @@ const PostComponent = ({ limit, customTitle }: PropPostInt) => {
               <PostCard
                 title={v.title}
                 description={v.description}
-                img={v.cover}
+                img={v.cover || ""}
               />
             </Link>
           ))}

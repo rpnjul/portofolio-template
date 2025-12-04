@@ -28,6 +28,7 @@ const EditProject = () => {
       return;
     }
     fetchProject();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectId]);
 
   const fetchProject = async () => {
@@ -35,7 +36,7 @@ const EditProject = () => {
       const response = await fetch("/api/projects");
       const data = await response.json();
       if (data.status !== false) {
-        const project = data.data.find((p: any) => p.project_id === Number(projectId));
+        const project = data.data.find((p: { _id: string | string[] | undefined }) => p._id === projectId);
         if (project) {
           setFormData({
             title: project.title || "",
@@ -73,7 +74,7 @@ const EditProject = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          project_id: Number(projectId),
+          _id: projectId,
           ...formData,
         }),
       });

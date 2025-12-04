@@ -57,9 +57,9 @@ const ProjectComponent = ({ limit, customTitle }: ProjPropsInt) => {
                     <ProjectCard
                       title={v.title}
                       description={v.description}
-                      cover={v.cover}
-                      icon={v.icon}
-                      stack={v.tech_map}
+                      cover={v.cover || ""}
+                      icon={v.icon || ""}
+                      stack={v.tech_map || []}
                     />
                   </Link>
                 ))}

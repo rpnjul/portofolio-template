@@ -53,14 +53,14 @@ export async function generateMetadata({
       url: `${baseUrl}/posts/${slug}`,
       title: post.title,
       description: post.description,
-      images: [
+      images: post.cover ? [
         {
           url: post.cover,
           width: 1200,
           height: 630,
           alt: post.title,
         },
-      ],
+      ] : [],
       publishedTime: new Date(post.created_at).toISOString(),
       modifiedTime: new Date(post.updated_at).toISOString(),
       authors: ["Satria Aprilian"],
@@ -71,7 +71,7 @@ export async function generateMetadata({
       creator: "@sssssatria",
       title: post.title,
       description: post.description,
-      images: [post.cover],
+      images: post.cover ? [post.cover] : [],
     },
     alternates: {
       canonical: `${baseUrl}/posts/${slug}`,
@@ -97,7 +97,7 @@ const PostsDetail = async ({
     "@type": "BlogPosting",
     headline: data.title,
     description: data.description,
-    image: data.cover,
+    ...(data.cover && { image: data.cover }),
     datePublished: new Date(data.created_at).toISOString(),
     dateModified: new Date(data.updated_at).toISOString(),
     author: {
@@ -124,19 +124,21 @@ const PostsDetail = async ({
           __html: JSON.stringify(articleStructuredData),
         }}
       />
-      <figure className="full-width">
-        <picture>
-          <Image
-            src={data.cover}
-            alt={data.title}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto rounded-[10px]"
-            priority
-          />
-        </picture>
-      </figure>
+      {data.cover && (
+        <figure className="full-width">
+          <picture>
+            <Image
+              src={data.cover}
+              alt={data.title}
+              width={0}
+              height={0}
+              sizes="100vw"
+              className="w-full h-auto rounded-[10px]"
+              priority
+            />
+          </picture>
+        </figure>
+      )}
       <div className="card">
         <h1 className="m-0" style={{ margin: 0 }}>
           {data.title}
