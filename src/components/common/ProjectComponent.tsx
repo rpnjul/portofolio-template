@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import ProjectSkeleton from "../skeleton/ProjectSkeleton";
 
 const getProjects = async (limit?: number): Promise<Projects[]> => {
+    // Use relative URL for client-side fetching
     const url = limit
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/projects?limit=${limit}`
-        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/projects`;
+        ? `/api/projects?limit=${limit}`
+        : `/api/projects`;
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {
-        throw new Error("Failed to fetch experience data");
+        throw new Error("Failed to fetch projects data");
     }
     const data = await res.json();
     return data.data;

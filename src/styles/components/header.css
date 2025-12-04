@@ -2,13 +2,15 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .site-nav {
     display: flex;
+    flex-direction: column;
     max-width: 80rem;
-    justify-content: space-between;
     margin: 0 auto;
     font-family: var(--font-mono);
 }
+
 .site-nav a {
     display: block;
     padding: 1rem;
@@ -29,20 +31,105 @@
     font-size: 18px;
 }
 
-@media screen and (max-width: 61rem) {
-  .site-nav,
-  .main-menu {
-    flex-direction: column;
-  }
-
-  .site-nav a {
-    padding: 0.5rem;
-    padding-left: 0;
-  }
-}
-
 .main-menu .active {
     font-weight: 700;
+}
+
+/* Desktop Menu - Hide on mobile */
+.desktop-menu {
+    display: flex;
+    flex-direction: row;
+}
+
+/* Mobile Menu - Hide by default */
+.mobile-menu {
+    display: none;
+}
+
+/* Hamburger button - Hide on desktop */
+.mobile-menu-button {
+    display: none;
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-button:hover {
+    transform: scale(1.1);
+}
+
+.mobile-menu-button:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger icon animation */
+.mobile-menu-button svg {
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-button svg line {
+    transition: all 0.3s ease;
+}
+
+/* Mobile menu dropdown animation */
+.mobile-menu {
+    display: flex;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+}
+
+.mobile-menu.open {
+    max-height: 500px;
+    opacity: 1;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+    /* Hide desktop menu on mobile */
+    .desktop-menu {
+        display: none !important;
+    }
+
+    /* Show hamburger button on mobile */
+    .mobile-menu-button {
+        display: block !important;
+    }
+
+    /* Mobile menu styling */
+    .mobile-menu {
+        width: 100%;
+    }
+
+    .site-nav a {
+        padding: 0.75rem 0;
+        transition: padding-left 0.2s ease;
+    }
+
+    .site-nav a:hover {
+        padding-left: 0.5rem;
+    }
+
+    .site-nav .logo {
+        padding: 1rem 0;
+    }
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 769px) {
+    /* Keep desktop menu visible */
+    .desktop-menu {
+        display: flex !important;
+    }
+
+    /* Always hide mobile menu on desktop */
+    .mobile-menu {
+        display: none !important;
+    }
+
+    /* Always hide hamburger on desktop */
+    .mobile-menu-button {
+        display: none !important;
+    }
 }
 
 .logout-link {
@@ -60,9 +147,9 @@
     opacity: 0.8;
 }
 
-@media screen and (max-width: 61rem) {
+@media screen and (max-width: 768px) {
     .logout-link {
-        padding: 0.5rem;
-        padding-left: 0;
+        padding: 0.75rem 0;
+        font-size: 18px;
     }
 }

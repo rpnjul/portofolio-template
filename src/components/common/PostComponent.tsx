@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import PostSkeleton from "../skeleton/PostSkeleton";
 
 const getPosts = async (limit?: number): Promise<PostsData[]> => {
+  // Use relative URL for client-side fetching
   const url = limit
-    ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts?limit=${limit}`
-    : `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`;
+    ? `/api/posts?limit=${limit}`
+    : `/api/posts`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) {
       throw new Error("Failed to fetch posts data");
