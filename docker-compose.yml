@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: satriame-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-changeme}
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+    ports:
+      - "27017:27017"
+    networks:
+      - satriame-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Next.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: satriame-app
+    restart: unless-stopped
+    environment:
+      # Database
+      MONGODB_URI: mongodb://${MONGO_ROOT_USERNAME:-admin}:${MONGO_ROOT_PASSWORD:-changeme}@mongodb:27017
+      DB_NAME: ${DB_NAME:-satriame}
+
+      # Auto Migration & Seeding
+      AUTO_MIGRATE: ${AUTO_MIGRATE:-true}
+      AUTO_SEED: ${AUTO_SEED:-true}
+
+      # Default Admin User
+      DEFAULT_ADMIN_USERNAME: ${DEFAULT_ADMIN_USERNAME:-satria}
+      DEFAULT_ADMIN_PASSWORD: ${DEFAULT_ADMIN_PASSWORD}
+      DEFAULT_ADMIN_NAME: ${DEFAULT_ADMIN_NAME:-Satria Aprilian}
+
+      # JWT Secret
+      JWT_SECRET: ${JWT_SECRET}
+
+      # Application URL
+      NEXT_PUBLIC_BASE_URL: ${NEXT_PUBLIC_BASE_URL:-https://yourdomain.com}
+
+      # Node Environment
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - satriame-network
+
+  # Nginx Reverse Proxy (Optional - for SSL/HTTPS)
+  nginx:
+    image: nginx:alpine
+    container_name: satriame-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - certbot_data:/var/www/certbot:ro
+    depends_on:
+      - app
+    networks:
+      - satriame-network
+
+  # Certbot for SSL Certificates (Optional)
+  certbot:
+    image: certbot/certbot
+    container_name: satriame-certbot
+    volumes:
+      - ./nginx/ssl:/etc/letsencrypt
+      - certbot_data:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  mongodb_data:
+    driver: local
+  mongodb_config:
+    driver: local
+  certbot_data:
+    driver: local
+
+networks:
+  satriame-network:
+    driver: bridge

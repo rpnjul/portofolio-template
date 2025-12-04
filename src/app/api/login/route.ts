@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import { getDatabase } from "@/lib/db";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
@@ -15,12 +15,9 @@ export async function POST(req: Request) {
                 { status: 400 }
             );
         }
-        const [rows] = await db.query(
-            "SELECT * FROM users WHERE username = ? LIMIT 1",
-            [username]
-        );
-        const users = rows as User[];
-        const user = users[0];
+
+        const db = await getDatabase();
+        const user = await db.collection<User>("users").findOne({ username });
 
         if (!user) {
             return NextResponse.json(
@@ -28,21 +25,24 @@ export async function POST(req: Request) {
                 { status: 404 }
             );
         }
+
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
-            return NextResponse.json({ message: "Password salah",status:false }, { status: 200 });
+            return NextResponse.json({ message: "Password salah", status: false }, { status: 200 });
         }
+
         const token = jwt.sign(
-            { id: user.id, email: user.email, name: user.name},
+            { id: user._id?.toString(), username: user.username, name: user.name },
             SECRET,
             { expiresIn: "1h" }
         );
+
         return NextResponse.json(
-            { message: "Login berhasil", token, "status": true },
+            { message: "Login berhasil", token, status: true },
             { status: 200 }
         );
     } catch (err) {
         console.error(err);
-        return NextResponse.json({ message: "Server error"}, { status: 500 });
+        return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }

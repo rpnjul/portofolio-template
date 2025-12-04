@@ -2,15 +2,17 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+    const router = useRouter();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+            const res = await fetch("/api/login",
                 {
                     method: "POST",
                     headers: {
@@ -25,7 +27,11 @@ const LoginForm = () => {
             const data = await res.json();
             if(data.status){
                 console.log("Login success:", data);
+                localStorage.setItem("token", data.token);
                 toast('Finally! I can access my own web');
+                setTimeout(() => {
+                    router.push("/dashboard");
+                }, 1000);
             } else {
                 toast(<WrongLogin />);
             }

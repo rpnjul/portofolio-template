@@ -1,9 +1,9 @@
-import { RowDataPacket } from "mysql2";
+import { ObjectId } from "mongodb";
 
-export interface PostsData extends RowDataPacket{
-    post_id ?: number;
-    slug: string;
-    cover: string;
+export interface PostsData {
+    _id?: ObjectId;
+    slug?: string;
+    cover?: string;
     title: string;
     description: string;
     content: string;

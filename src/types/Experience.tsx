@@ -1,7 +1,7 @@
-import { RowDataPacket } from "mysql2";
+import { ObjectId } from "mongodb";
 
-export interface Experience extends RowDataPacket {
-  exp_id: number;
+export interface Experience {
+  _id?: ObjectId;
   company: string;
   job: string;
   link: string;

@@ -1,8 +1,9 @@
-import { RowDataPacket } from "mysql2"
+import { ObjectId } from "mongodb";
 
-export interface User extends RowDataPacket {
-    id: number
-    email: string
-    name: string
-    password: string
+export interface User {
+    _id?: ObjectId;
+    username: string;
+    name: string;
+    password: string;
+    avatar?: string;
 }

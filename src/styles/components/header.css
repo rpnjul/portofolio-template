@@ -44,3 +44,25 @@
 .main-menu .active {
     font-weight: 700;
 }
+
+.logout-link {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: inherit;
+    padding: 1rem;
+    text-align: left;
+}
+
+.logout-link:hover {
+    opacity: 0.8;
+}
+
+@media screen and (max-width: 61rem) {
+    .logout-link {
+        padding: 0.5rem;
+        padding-left: 0;
+    }
+}
