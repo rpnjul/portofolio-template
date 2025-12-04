@@ -79,7 +79,7 @@ const About = () => (
       tech, or just trying to make the web a little bit better.
     </p>
     <p className="my-8">
-      Oh yeah, this website source-code is open-source! So if you want a site
+      Last but not least, this website source-code is open-source! So if you want a site
       like this too, feel free to check out the code on my GitHub{" "}
       <a href="https://github.com/rpnjul/portofolio-template">here</a>. And if
       you get stuck while setting it up, don’t worry — you can always reach out

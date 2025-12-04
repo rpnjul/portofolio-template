@@ -1,4 +1,4 @@
-"use client"; // kalau kamu pakai Next.js app router
+"use client";
 
 import { Experience } from "@/types/Experience";
 import { useEffect, useState } from "react";
@@ -8,8 +8,8 @@ import ExpSkeleton from "../skeleton/ExpSkeleton";
 
 const getExperience = async (limit?: number): Promise<Experience[]> => {
     const url = limit
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/experience?limit=${limit}`
-        : `${process.env.NEXT_PUBLIC_BASE_URL}/api/experience`;
+        ? `/api/experience?limit=${limit}`
+        : `/api/experience`;
 
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) {
@@ -24,7 +24,6 @@ interface ExpPropsInt {
   limit?: number;
 }
   
-
 const ExpComponent = ({ limit }: ExpPropsInt) => {
   const [expData, setExpData] = useState<Experience[]>([]);
   const [isLoading, setIsLoading] = useState(true);
