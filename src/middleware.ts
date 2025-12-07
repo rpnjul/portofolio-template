@@ -31,7 +31,9 @@ export function middleware(request: NextRequest) {
 
   // Rate Limiting for API routes
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+    const ip = request.headers.get('x-forwarded-for') ||
+               request.headers.get('x-real-ip') ||
+               'unknown';
     const now = Date.now();
     const clientData = requestCounts.get(ip);
 
