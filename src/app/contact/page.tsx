@@ -194,35 +194,40 @@ const Contact = () => {
                 <h1 className="unset text-4xl" style={{ margin: 0 }}>
                   Satria Aprilian
                 </h1>
-                <nav aria-label="Social media links">
-                  <ul className="flex gap-2 justify-end" style={{ margin: 0, padding: 0, listStyle: 'none' }}>
-                    {contact.map((v, i) => (
-                      <li key={i}>
-                        <Link
-                          href={v.link}
-                          target="_blank"
-                          aria-label={v.label}
-                          rel="noopener noreferrer"
-                          title={v.label}
+                <ul
+                  aria-label="Social media links"
+                  className="flex gap-2 justify-end"
+                  style={{ margin: 0, padding: 0, listStyle: "none" }}
+                >
+                  {contact.map((v, i) => (
+                    <li key={i}>
+                      <Link
+                        href={v.link}
+                        target="_blank"
+                        aria-label={v.label}
+                        rel="noopener noreferrer"
+                        title={v.label}
+                      >
+                        <div
+                          className="card"
+                          style={{ padding: 10, lineHeight: 0, margin: 0 }}
                         >
-                          <div
-                            className="card"
-                            style={{ padding: 10, lineHeight: 0, margin: 0 }}
-                          >
-                            <div className="w-[20px] h-[20px]">{v.icon}</div>
-                          </div>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                          <div className="w-[20px] h-[20px]">{v.icon}</div>
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </header>
-            <address className="mb-0 mt-4" style={{ fontStyle: 'normal' }}>
+            <address className="mb-0 mt-4" style={{ fontStyle: "normal" }}>
               {contactLink.map((v, i) => {
                 if (v.type === "address") {
                   return (
-                    <div className="flex justify-start items-center mt-4" key={i}>
+                    <div
+                      className="flex justify-start items-center mt-4"
+                      key={i}
+                    >
                       <div className="h-[20px] w-[20px] custom mr-2">
                         {v.icon}
                       </div>
@@ -241,7 +246,9 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     style={{ color: "#fff" }}
                   >
-                    <div className="h-[20px] w-[20px] custom mr-2">{v.icon}</div>
+                    <div className="h-[20px] w-[20px] custom mr-2">
+                      {v.icon}
+                    </div>
                     <span className="w-fit" style={{ margin: 0 }}>
                       {v.label}
                     </span>
