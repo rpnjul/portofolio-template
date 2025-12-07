@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-if (!JWT_SECRET) {
-  throw new Error('CRITICAL SECURITY ERROR: JWT_SECRET environment variable is not set!');
-}
-
 export interface AuthRequest extends NextRequest {
   user?: {
     id: number;
@@ -17,6 +11,13 @@ export interface AuthRequest extends NextRequest {
 
 export async function verifyToken(request: NextRequest): Promise<{ valid: boolean; user?: any; error?: string }> {
   try {
+    const JWT_SECRET = process.env.JWT_SECRET;
+
+    if (!JWT_SECRET) {
+      console.error('CRITICAL SECURITY ERROR: JWT_SECRET environment variable is not set!');
+      return { valid: false, error: 'Server configuration error' };
+    }
+
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -25,7 +26,7 @@ export async function verifyToken(request: NextRequest): Promise<{ valid: boolea
 
     const token = authHeader.substring(7);
 
-    const decoded = jwt.verify(token, JWT_SECRET as string) as { id: number; username: string; name: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: number; username: string; name: string };
 
     return { valid: true, user: decoded };
   } catch (error) {

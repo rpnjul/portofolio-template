@@ -4,12 +4,6 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { User } from "@/types/Users";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-if (!JWT_SECRET) {
-    throw new Error('CRITICAL SECURITY ERROR: JWT_SECRET environment variable is not set!');
-}
-
 // In-memory store for login attempts (use Redis in production)
 const loginAttempts = new Map<string, { count: number; lastAttempt: number; lockedUntil?: number }>();
 const MAX_ATTEMPTS = 5;
@@ -18,6 +12,16 @@ const ATTEMPT_WINDOW = 5 * 60 * 1000; // 5 minutes
 
 export async function POST(req: Request) {
     try {
+        const JWT_SECRET = process.env.JWT_SECRET;
+
+        if (!JWT_SECRET) {
+            console.error('CRITICAL SECURITY ERROR: JWT_SECRET environment variable is not set!');
+            return NextResponse.json(
+                { message: "Server configuration error", status: false },
+                { status: 500 }
+            );
+        }
+
         const { username, password } = await req.json();
 
         // Input validation
@@ -100,7 +104,7 @@ export async function POST(req: Request) {
 
         const token = jwt.sign(
             { id: user._id?.toString(), username: user.username, name: user.name },
-            JWT_SECRET as string,
+            JWT_SECRET,
             { expiresIn: "1h" }
         );
 
