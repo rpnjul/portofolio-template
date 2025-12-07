@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { PostsData } from "@/types/Posts";
 import { notFound } from "next/navigation";
 
@@ -16,6 +17,20 @@ const getPosts = async (slug: string): Promise<PostsData | null> => {
     console.error(error);
     return null;
   }
+};
+
+// Calculate reading time based on word count
+const calculateReadingTime = (content: string): number => {
+  const wordsPerMinute = 200;
+  const text = content.replace(/<[^>]*>/g, "");
+  const wordCount = text.trim().split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+};
+
+// Count words in HTML content
+const countWords = (content: string): number => {
+  const text = content.replace(/<[^>]*>/g, "");
+  return text.trim().split(/\s+/).length;
 };
 
 // Generate dynamic metadata for SEO
@@ -47,12 +62,24 @@ export async function generateMetadata({
       "Tutorial",
     ],
     authors: [{ name: "Satria Aprilian" }],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
       type: "article",
       locale: "id_ID",
       url: `${baseUrl}/posts/${slug}`,
       title: post.title,
       description: post.description,
+      siteName: "Satria Aprilian",
       images: post.cover ? [
         {
           url: post.cover,
@@ -89,7 +116,9 @@ const PostsDetail = async ({
 
   if (!data) return notFound();
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://satria.me";
+  const wordCount = data.content ? countWords(data.content) : 0;
+  const readingTime = data.content ? calculateReadingTime(data.content) : 0;
 
   // Structured data for article SEO
   const articleStructuredData = {
@@ -106,14 +135,46 @@ const PostsDetail = async ({
       url: baseUrl,
     },
     publisher: {
-      "@type": "Person",
+      "@type": "Organization",
       name: "Satria Aprilian",
-      url: baseUrl,
+      logo: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/favicon.ico`,
+      },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${baseUrl}/posts/${slug}`,
     },
+    wordCount,
+    articleSection: "Blog",
+    inLanguage: "id-ID",
+  };
+
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: baseUrl,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Posts",
+        item: `${baseUrl}/posts`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: data.title,
+        item: `${baseUrl}/posts/${slug}`,
+      },
+    ],
   };
 
   return (
@@ -124,9 +185,36 @@ const PostsDetail = async ({
           __html: JSON.stringify(articleStructuredData),
         }}
       />
-      {data.cover && (
-        <figure className="full-width">
-          <picture>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
+
+      <nav aria-label="Breadcrumb" className="mb-4">
+        <ol className="flex items-center gap-2 text-sm text-gray-400">
+          <li>
+            <Link href="/" className="hover:text-white transition-colors">
+              Home
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li>
+            <Link href="/posts" className="hover:text-white transition-colors">
+              Posts
+            </Link>
+          </li>
+          <li aria-hidden="true">/</li>
+          <li aria-current="page" className="text-white">
+            {data.title}
+          </li>
+        </ol>
+      </nav>
+
+      <article lang="id">
+        {data.cover && (
+          <figure className="full-width">
             <Image
               src={data.cover}
               alt={data.title}
@@ -136,37 +224,52 @@ const PostsDetail = async ({
               className="w-full h-auto rounded-[10px]"
               priority
             />
-          </picture>
-        </figure>
-      )}
-      <div className="card">
-        <h1 className="m-0" style={{ margin: 0 }}>
-          {data.title}
-        </h1>
-        <time
-          className="block mt-0 text-gray-400"
-          dateTime={new Date(data.created_at).toISOString()}
-        >
-          {new Date(data.created_at).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </time>
-      </div>
-      <div className="mt-8">
-        {data.content ? (
-          <div
-            className="my-8"
-            id="content"
-            dangerouslySetInnerHTML={{
-              __html: data.content,
-            }}
-          ></div>
-        ) : (
-          <p className="my-8">No Content</p>
+          </figure>
         )}
-      </div>
+
+        <header className="card">
+          <h1 className="m-0" style={{ margin: 0 }}>
+            {data.title}
+          </h1>
+          <div className="flex items-center gap-4 mt-2 text-gray-400 text-sm">
+            <time
+              className="block"
+              dateTime={new Date(data.created_at).toISOString()}
+            >
+              {new Date(data.created_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+            <span aria-hidden="true">•</span>
+            <span>{readingTime} min read</span>
+            <span aria-hidden="true">•</span>
+            <span>{wordCount} words</span>
+          </div>
+          <Link
+            href="/"
+            rel="author"
+            className="text-sm text-gray-400 hover:text-white transition-colors mt-2 inline-block"
+          >
+            By Satria Aprilian
+          </Link>
+        </header>
+
+        <section className="mt-8">
+          {data.content ? (
+            <div
+              className="my-8"
+              id="content"
+              dangerouslySetInnerHTML={{
+                __html: data.content,
+              }}
+            ></div>
+          ) : (
+            <p className="my-8">No Content</p>
+          )}
+        </section>
+      </article>
     </>
   );
 };

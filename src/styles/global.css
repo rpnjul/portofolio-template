@@ -180,7 +180,7 @@ body {
   border-style: none
 }
 
-.bg-accent {
+.bg-indigo-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity))
 }
@@ -588,7 +588,7 @@ body {
   border-color: rgb(248 250 252 / var(--tw-border-opacity))
 }
 
-.after\:bg-accent::after {
+.after\:bg-indigo-500::after {
   content: var(--tw-content);
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity))
