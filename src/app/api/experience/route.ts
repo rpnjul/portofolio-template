@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     const experiences = await db
       .collection<Experience>("experiences")
       .find({})
-      .sort({ date: -1 })
+      .sort({ createdAt: -1 })
       .limit(limit)
       .toArray();
 
@@ -52,6 +52,7 @@ export async function POST(req: NextRequest) {
       link: link || "",
       description: description || "",
       date,
+      createdAt: new Date(),
     });
 
     return NextResponse.json(

@@ -50,3 +50,9 @@ next-env.d.ts
 
 # logs
 *.log
+logs/
+DEPLOYMENT.md
+QUICK-START.md
+ecosystem.config.js
+setup-server.sh
+update-app.sh

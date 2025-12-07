@@ -7,4 +7,5 @@ export interface Experience {
   link: string;
   description: string;
   date: string;
+  createdAt?: Date;
 }
