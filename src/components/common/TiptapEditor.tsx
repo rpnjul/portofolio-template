@@ -53,14 +53,36 @@ const TiptapEditor = ({ content, onChange }: TiptapEditorProps) => {
   const addLink = () => {
     const url = window.prompt("Enter URL:");
     if (url) {
-      editor.chain().focus().setLink({ href: url }).run();
+      // Validate URL to prevent XSS attacks
+      try {
+        const parsedUrl = new URL(url);
+        // Only allow http/https protocols
+        if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+          editor.chain().focus().setLink({ href: url }).run();
+        } else {
+          alert('Only HTTP/HTTPS URLs are allowed');
+        }
+      } catch (e) {
+        alert('Invalid URL format');
+      }
     }
   };
 
   const addImage = () => {
     const url = window.prompt("Enter image URL:");
     if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+      // Validate URL to prevent XSS attacks
+      try {
+        const parsedUrl = new URL(url);
+        // Only allow http/https protocols
+        if (parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') {
+          editor.chain().focus().setImage({ src: url }).run();
+        } else {
+          alert('Only HTTP/HTTPS URLs are allowed');
+        }
+      } catch (e) {
+        alert('Invalid URL format');
+      }
     }
   };
 
