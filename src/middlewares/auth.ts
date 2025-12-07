@@ -25,7 +25,7 @@ export async function verifyToken(request: NextRequest): Promise<{ valid: boolea
 
     const token = authHeader.substring(7);
 
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: number; username: string; name: string };
+    const decoded = jwt.verify(token, JWT_SECRET as string) as { id: number; username: string; name: string };
 
     return { valid: true, user: decoded };
   } catch (error) {
