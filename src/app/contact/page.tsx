@@ -187,21 +187,6 @@ const Contact = () => {
             __html: JSON.stringify(breadcrumbStructuredData),
           }}
         />
-
-        <nav aria-label="Breadcrumb" className="mb-4">
-          <ol className="flex items-center gap-2 text-sm text-gray-400">
-            <li>
-              <Link href="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true">/</li>
-            <li aria-current="page" className="text-white">
-              Contact
-            </li>
-          </ol>
-        </nav>
-
         <main>
           <div className="card">
             <header className="flex flex-col gap-1">

@@ -191,27 +191,6 @@ const PostsDetail = async ({
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
       />
-
-      <nav aria-label="Breadcrumb" className="mb-4">
-        <ol className="flex items-center gap-2 text-sm text-gray-400">
-          <li>
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li>
-            <Link href="/posts" className="hover:text-white transition-colors">
-              Posts
-            </Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li aria-current="page" className="text-white">
-            {data.title}
-          </li>
-        </ol>
-      </nav>
-
       <article lang="id">
         {data.cover && (
           <figure className="full-width">
@@ -231,21 +210,33 @@ const PostsDetail = async ({
           <h1 className="m-0" style={{ margin: 0 }}>
             {data.title}
           </h1>
-          <div className="flex items-center gap-4 mt-2 text-gray-400 text-sm">
+          <div className="flex gap-2 mt-4 custom flex-wrap">
             <time
-              className="block"
+              className="mb-0 card p-2 flex items-center custom"
+              style={{ padding: "0.5rem" }}
               dateTime={new Date(data.created_at).toISOString()}
             >
-              {new Date(data.created_at).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              <span>
+                🕒
+                {new Date(data.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
             </time>
-            <span aria-hidden="true">•</span>
-            <span>{readingTime} min read</span>
-            <span aria-hidden="true">•</span>
-            <span>{wordCount} words</span>
+            <div
+              className="mb-0 card p-2 flex items-center custom"
+              style={{ padding: "0.5rem" }}
+            >
+              <span>⌛{readingTime} min read</span>
+            </div>
+            <div
+              className="mb-0 card p-2 flex items-center custom"
+              style={{ padding: "0.5rem" }}
+            >
+              <span>🔤 {wordCount} words</span>
+            </div>
           </div>
           <Link
             href="/"
