@@ -9,14 +9,28 @@ import { MdOpenInNew } from "react-icons/md";
 // Project details rarely change after creation
 export const revalidate = 2592000;
 
+// Allow dynamic routes to be generated on-demand if not pre-rendered
+export const dynamicParams = true;
+
 // Generate static params for all projects at build time
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/projects`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour during build
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    // Skip generation during build if API is not available
+    if (!baseUrl || baseUrl.includes('localhost')) {
+      console.log('Skipping static generation for projects during build');
+      return [];
+    }
+
+    const res = await fetch(`${baseUrl}/api/projects`, {
+      cache: 'no-store', // Don't cache during build
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error(`Failed to fetch projects for static generation: ${res.status}`);
+      return [];
+    }
 
     const data = await res.json();
     const projects = data.data || [];

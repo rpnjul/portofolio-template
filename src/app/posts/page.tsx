@@ -64,14 +64,23 @@ export const metadata: Metadata = {
 };
 
 const getPosts = async (): Promise<PostsData[]> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-    next: { revalidate: 21600 }, // Cache for 6 hours
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch posts data");
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/posts`, {
+      next: { revalidate: 21600 }, // Cache for 6 hours
+    });
+
+    if (!res.ok) {
+      console.error(`Failed to fetch posts: ${res.status}`);
+      return []; // Return empty array instead of throwing
+    }
+
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return []; // Return empty array on error during build
   }
-  const data = await res.json();
-  return data.data;
 };
 
 const LoadingSkeleton = () => {

@@ -8,14 +8,28 @@ import { notFound } from "next/navigation";
 // Individual posts rarely change after publication
 export const revalidate = 2592000;
 
+// Allow dynamic routes to be generated on-demand if not pre-rendered
+export const dynamicParams = true;
+
 // Generate static params for all posts at build time
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour during build
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    // Skip generation during build if API is not available
+    if (!baseUrl || baseUrl.includes('localhost')) {
+      console.log('Skipping static generation for posts during build');
+      return [];
+    }
+
+    const res = await fetch(`${baseUrl}/api/posts`, {
+      cache: 'no-store', // Don't cache during build
     });
 
-    if (!res.ok) return [];
+    if (!res.ok) {
+      console.error(`Failed to fetch posts for static generation: ${res.status}`);
+      return [];
+    }
 
     const data = await res.json();
     const posts = data.data || [];
