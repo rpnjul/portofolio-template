@@ -5,10 +5,37 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MdOpenInNew } from "react-icons/md";
 
+// Enable ISR - Revalidate every 30 days (2592000 seconds)
+// Project details rarely change after creation
+export const revalidate = 2592000;
+
+// Generate static params for all projects at build time
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/projects`, {
+      next: { revalidate: 3600 }, // Cache for 1 hour during build
+    });
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    const projects = data.data || [];
+
+    return projects.map((project: Projects) => ({
+      slug: project.slug,
+    }));
+  } catch (error) {
+    console.error("Error generating static params for projects:", error);
+    return [];
+  }
+}
+
 const getProjects = async (slug: string): Promise<Projects | null> => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/projects/${slug}`;
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, {
+      next: { revalidate: 2592000 } // Cache for 30 days
+    });
     if (!res.ok) {
       return null;
     }

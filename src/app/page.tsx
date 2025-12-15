@@ -8,6 +8,10 @@ import { FaGithub, FaInstagram } from "react-icons/fa";
 import { GrLocationPin } from "react-icons/gr";
 import { Metadata } from "next";
 
+// Enable ISR - Revalidate every 1 day (86400 seconds)
+// This means the page will be statically generated and regenerated every day
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "Satria Aprilian - Full Stack Developer | React, Next.js, Laravel Expert",
   description: "Full-Stack Developer with 5+ years of experience in building fast, responsive, and impactful web applications. Specializing in React, Next.js, Laravel, Node.js, and modern tech stack.",
@@ -122,6 +126,38 @@ const Home = async () => {
     ],
   };
 
+  // FAQ structured data for better SEO
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What technologies does Satria Aprilian work with?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Satria Aprilian specializes in modern web technologies including React, Next.js, Laravel, Node.js, React Native, TypeScript, and JavaScript. He works with both frontend and backend technologies to build full-stack applications.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What services does Satria Aprilian offer?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Satria offers full-stack web development, mobile app development with React Native, API development, e-commerce solutions, and custom web application development. He specializes in building scalable, fast, and responsive applications.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Where is Satria Aprilian based?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Satria Aprilian is based in Jakarta, Indonesia. He works with clients both locally and internationally on web and mobile development projects.",
+        },
+      },
+    ],
+  };
+
     return (
       <>
         <script
@@ -134,6 +170,12 @@ const Home = async () => {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(personStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqStructuredData),
           }}
         />
 

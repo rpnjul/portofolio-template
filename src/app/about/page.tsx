@@ -7,6 +7,9 @@ import { FaGithub, FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 import { Metadata } from "next";
 
+// Force static generation - This page is fully static and doesn't need revalidation
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "About Satria Aprilian - Full Stack Developer & Software Engineer",
   description: "Satria Aprilian is a full-stack software engineer specializing in React, Next.js, Laravel, and Node.js. Building scalable web and mobile applications with clean architecture.",

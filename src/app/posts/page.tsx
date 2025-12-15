@@ -3,6 +3,10 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Suspense } from "react";
 
+// Enable ISR - Revalidate every 6 hours (21600 seconds)
+// Blog posts are added occasionally, so 6 hours is a good balance
+export const revalidate = 21600;
+
 export const metadata: Metadata = {
   title: "Blog - Satria Aprilian | Satria Aprilian Writing & Content",
   description: "Read articles and tutorials about web development, React, Next.js, Laravel, Node.js, and modern programming practices by Satria Aprilian.",
@@ -61,7 +65,7 @@ export const metadata: Metadata = {
 
 const getPosts = async (): Promise<PostsData[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-    cache: "no-store",
+    next: { revalidate: 21600 }, // Cache for 6 hours
   });
   if (!res.ok) {
     throw new Error("Failed to fetch posts data");

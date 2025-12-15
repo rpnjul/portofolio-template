@@ -4,10 +4,37 @@ import Link from "next/link";
 import { PostsData } from "@/types/Posts";
 import { notFound } from "next/navigation";
 
+// Enable ISR - Revalidate every 30 days (2592000 seconds)
+// Individual posts rarely change after publication
+export const revalidate = 2592000;
+
+// Generate static params for all posts at build time
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+      next: { revalidate: 3600 }, // Cache for 1 hour during build
+    });
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    const posts = data.data || [];
+
+    return posts.map((post: PostsData) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("Error generating static params for posts:", error);
+    return [];
+  }
+}
+
 const getPosts = async (slug: string): Promise<PostsData | null> => {
   try {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${slug}`;
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetch(url, {
+      next: { revalidate: 2592000 } // Cache for 30 days
+    });
     if (!res.ok) {
       return null;
     }

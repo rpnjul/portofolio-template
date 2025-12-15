@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     canonical: process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
   },
   verification: {
-    google: "your-google-verification-code", // Ganti dengan Google Search Console verification code
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION, // Add this to your .env: NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=your-code-here
   },
 };
 

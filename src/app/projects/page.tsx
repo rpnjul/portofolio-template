@@ -2,6 +2,10 @@ import ProjectComponent from "@/components/common/ProjectComponent";
 import Link from "next/link";
 import { Metadata } from "next";
 
+// Enable ISR - Revalidate every 24 hours (86400 seconds)
+// Projects don't change frequently, so 24 hours is sufficient
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "Projects - Satria Aprilian | Portfolio & Work Showcase",
   description: "Explore featured projects and work portfolio by Satria Aprilian. Web development projects using React, Next.js, Laravel, and modern tech stack.",

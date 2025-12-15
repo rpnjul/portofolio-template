@@ -4,6 +4,9 @@ import { GrLocationPin } from "react-icons/gr";
 import { IoMailOutline } from "react-icons/io5";
 import { Metadata } from "next";
 
+// Force static generation - This page is fully static
+export const dynamic = 'force-static';
+
 export const metadata: Metadata = {
   title: "Contact Satria Aprilian - Hire Full Stack Developer",
   description: "Get in touch with Satria Aprilian, a full-stack developer based in Jakarta, Indonesia. Available for hire for web and mobile development projects. Contact via email, WhatsApp, or LinkedIn.",
